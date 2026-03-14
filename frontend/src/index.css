@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream-50 text-wood-900 font-sans;
+  }
+
+  ::selection {
+    @apply bg-terracotta-200/60 text-wood-900;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-24 md:py-32 px-6;
+  }
+
+  .section-title {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl text-wood-800 mb-4 leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-sage-600 uppercase tracking-[0.2em] text-xs md:text-sm mb-6 font-sans font-bold;
+  }
+
+  .section-divider {
+    @apply w-16 h-px bg-terracotta-400 mx-auto;
+  }
+}

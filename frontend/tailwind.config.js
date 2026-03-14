@@ -1,0 +1,61 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      colors: {
+        terracotta: {
+          50:  '#fff1f1',
+          100: '#ffdede',
+          200: '#ffb5b5',
+          300: '#ff8585',
+          400: '#f45050',
+          500: '#e62f2f',
+          600: '#cf1f1f',
+          700: '#ad1717',
+          800: '#8f1818',
+          900: '#761a1a',
+          950: '#410909',
+        },
+        sage: {
+          50:  '#f5f7f0',
+          100: '#e7ebe0',
+          200: '#d0d9c2',
+          300: '#b1c09b',
+          400: '#92a574',
+          500: '#758a56',
+          600: '#5b6e43',
+          700: '#475636',
+          800: '#3b462e',
+          900: '#333d29',
+          950: '#1a2013',
+        },
+        cream: {
+          50:  '#FFFDF7',
+          100: '#FDF8EE',
+          200: '#FAF0DA',
+          300: '#F5E4C3',
+          400: '#EDCFA0',
+        },
+        wood: {
+          50:  '#F9F5F0',
+          100: '#F0E8DE',
+          200: '#E0CEBC',
+          300: '#BEA58A',
+          400: '#A68563',
+          500: '#8B6844',
+          600: '#6E5035',
+          700: '#573E2A',
+          800: '#3D2B1E',
+          900: '#2A1D12',
+          950: '#1A110A',
+        },
+      },
+      fontFamily: {
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        sans:  ['"Lato"', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+};
