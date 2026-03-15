@@ -15,7 +15,7 @@ export default function Navbar() {
   const logo = siteData.images.logo?.navbar || siteData.images.logo?.primary;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -35,8 +35,8 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-wood-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-espresso-900 ${
+        scrolled ? 'shadow-lg shadow-black/30' : 'border-b border-espresso-800'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -99,7 +99,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-wood-900/95 backdrop-blur-md overflow-hidden"
+            className="md:hidden bg-espresso-900 border-t border-espresso-800 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-5">
               {links.map((l) => (
