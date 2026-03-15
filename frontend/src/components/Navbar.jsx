@@ -1,51 +1,73 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteData } from '../data/siteData';
 
 const links = [
-  { label: 'Home', href: '#hero' },
-  { label: 'Chi Siamo', href: '#chi-siamo' },
-  { label: 'Menu', href: '#menu' },
-  { label: 'Contatti', href: '#contatti' },
+  { label: 'Home', to: '/' },
+  { label: 'Chi Siamo', to: '/chi-siamo' },
+  { label: 'Menu', to: '/menu' },
+  { label: 'Contatti', to: '/contatti' },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isLightBackground, setIsLightBackground] = useState(false);
+  const location = useLocation();
   const logo = siteData.images.logo?.navbar || siteData.images.logo?.primary;
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+  // Close mobile drawer on route change
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+
+  // Dynamic theme detection: check what section is behind the navbar
+  const detectTheme = useCallback(() => {
+    const probeX = window.innerWidth / 2;
+    const probeY = 34;
+    const els = document.elementsFromPoint(probeX, probeY);
+    let light = true;
+    for (const el of els) {
+      if (el.dataset?.navbar === 'true') continue;
+      const theme = el.dataset?.navTheme;
+      if (theme === 'dark') { light = false; break; }
+      if (theme === 'light') { light = true; break; }
+    }
+    setIsLightBackground(light);
   }, []);
 
-  const go = (e, href) => {
-    e.preventDefault();
-    setOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
+  useEffect(() => {
+    detectTheme();
+    window.addEventListener('scroll', detectTheme, { passive: true });
+    window.addEventListener('resize', detectTheme, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', detectTheme);
+      window.removeEventListener('resize', detectTheme);
+    };
+  }, [detectTheme, location.pathname]);
+
+  // Re-detect after route change and DOM paint
+  useEffect(() => {
+    const t = setTimeout(detectTheme, 100);
+    return () => clearTimeout(t);
+  }, [location.pathname, detectTheme]);
+
+  const activeLinkClass = isLightBackground
+    ? 'text-wood-900 font-bold'
+    : 'text-cream-50 font-bold';
+  const inactiveLinkClass = isLightBackground
+    ? 'text-terracotta-700 hover:text-wood-900'
+    : 'text-cream-100 hover:text-terracotta-300';
 
   return (
     <motion.nav
+      data-navbar="true"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-espresso-900 ${
-        scrolled ? 'shadow-lg shadow-black/30' : 'border-b border-espresso-800'
-      }`}
+      className="site-navbar fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-transparent backdrop-blur-sm"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <a
-          href="#hero"
-          onClick={(e) => go(e, '#hero')}
-          className="inline-flex items-center px-1 py-1"
-        >
+        <Link to="/" className="inline-flex items-center px-1 py-1">
           <img
             src={logo}
             alt="Trattoria La Gatta"
@@ -53,33 +75,34 @@ export default function Navbar() {
             loading="eager"
             decoding="async"
           />
-        </a>
+        </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <a
+            <NavLink
               key={l.label}
-              href={l.href}
-              onClick={(e) => go(e, l.href)}
-              className="text-cream-100 hover:text-terracotta-300 transition-colors text-sm uppercase tracking-widest"
+              to={l.to}
+              end={l.to === '/'}
+              className={({ isActive }) =>
+                `transition-colors text-sm uppercase tracking-widest ${isActive ? activeLinkClass : inactiveLinkClass}`
+              }
             >
               {l.label}
-            </a>
+            </NavLink>
           ))}
-          <a
-            href="#contatti"
-            onClick={(e) => go(e, '#contatti')}
+          <Link
+            to="/contatti"
             className="ml-2 bg-terracotta-600 hover:bg-terracotta-500 text-cream-50 px-6 py-2.5 rounded-full text-xs uppercase tracking-widest transition-all duration-300 hover:shadow-lg hover:shadow-terracotta-600/30"
           >
             Prenota
-          </a>
+          </Link>
         </div>
 
         {/* Hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-cream-50 focus:outline-none"
+          className={`md:hidden focus:outline-none ${isLightBackground ? 'text-wood-900' : 'text-cream-50'}`}
           aria-label="Menu"
         >
           <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,26 +122,29 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-espresso-900 border-t border-espresso-800 overflow-hidden"
+            className="md:hidden bg-wood-900/95 backdrop-blur-md overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-5">
               {links.map((l) => (
-                <a
+                <NavLink
                   key={l.label}
-                  href={l.href}
-                  onClick={(e) => go(e, l.href)}
-                  className="text-cream-100 hover:text-terracotta-300 transition-colors text-lg font-sans"
+                  to={l.to}
+                  end={l.to === '/'}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `transition-colors text-lg font-sans ${isActive ? 'text-terracotta-400 font-bold' : 'text-cream-100 hover:text-terracotta-300'}`
+                  }
                 >
                   {l.label}
-                </a>
+                </NavLink>
               ))}
-              <a
-                href="#contatti"
-                onClick={(e) => go(e, '#contatti')}
+              <Link
+                to="/contatti"
+                onClick={() => setOpen(false)}
                 className="mt-2 bg-terracotta-600 text-cream-50 px-6 py-3 rounded-full text-center text-sm uppercase tracking-widest"
               >
                 Prenota Ora
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

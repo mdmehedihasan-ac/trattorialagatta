@@ -15,7 +15,7 @@ const { contact, social } = siteData;
 
 export default function Contact() {
   return (
-    <section id="contatti" data-nav-theme="light" className="section-padding bg-cream-50 relative">
+    <section className="section-padding bg-cream-50 relative">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-wood-200/50 to-transparent" />
 
       <div className="max-w-6xl mx-auto">
@@ -26,11 +26,11 @@ export default function Contact() {
           viewport={{ once: true, margin: '-80px' }}
           className="text-center mb-16 md:mb-20"
         >
-          <motion.h2 variants={fadeUp} custom={0} className="section-title">
+          <motion.h2 variants={fadeUp} custom={1} className="section-title">
             Contatti
           </motion.h2>
-          <motion.div variants={fadeUp} custom={1} className="section-divider mt-6 mb-8" />
-          <motion.p variants={fadeUp} custom={2} className="text-wood-600 max-w-2xl mx-auto leading-relaxed">
+          <motion.div variants={fadeUp} custom={2} className="section-divider mt-6 mb-8" />
+          <motion.p variants={fadeUp} custom={3} className="text-wood-600 max-w-2xl mx-auto leading-relaxed">
             {contact.intro}
           </motion.p>
         </motion.div>

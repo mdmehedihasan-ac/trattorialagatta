@@ -1,5 +1,5 @@
-import { siteData } from '../data/siteData';
 import { Link } from 'react-router-dom';
+import { siteData } from '../data/siteData';
 
 const { contact, social } = siteData;
 
@@ -24,22 +24,22 @@ export default function Footer() {
             </p>
           </div>
 
+          {/* Link rapidi */}
+          <div>
+            <h5 className="text-xs uppercase tracking-widest text-terracotta-400 font-bold mb-4">Link rapidi</h5>
+            <div className="flex flex-col gap-2">
+              <Link to="/" className="text-sm hover:text-terracotta-300 transition-colors">Home</Link>
+              <Link to="/chi-siamo" className="text-sm hover:text-terracotta-300 transition-colors">Chi Siamo</Link>
+              <Link to="/menu" className="text-sm hover:text-terracotta-300 transition-colors">Menu</Link>
+              <Link to="/contatti" className="text-sm hover:text-terracotta-300 transition-colors">Contatti</Link>
+            </div>
+          </div>
+
           {/* Address */}
           <div>
             <h5 className="text-xs uppercase tracking-widest text-terracotta-400 font-bold mb-4">Dove siamo</h5>
             <p className="text-sm leading-relaxed">{contact.address}</p>
             <p className="text-sm">{contact.cap} {contact.city}</p>
-          </div>
-
-          {/* Quick links */}
-          <div>
-            <h5 className="text-xs uppercase tracking-widest text-terracotta-400 font-bold mb-4">Link rapidi</h5>
-            <div className="space-y-2 text-sm">
-              <p><Link to="/" className="hover:text-terracotta-300 transition-colors">Home</Link></p>
-              <p><Link to="/chi-siamo" className="hover:text-terracotta-300 transition-colors">Chi Siamo</Link></p>
-              <p><Link to="/menu" className="hover:text-terracotta-300 transition-colors">Menu</Link></p>
-              <p><Link to="/contatti" className="hover:text-terracotta-300 transition-colors">Contatti</Link></p>
-            </div>
           </div>
 
           {/* Hours */}
