@@ -96,3 +96,8 @@
     @apply text-[10px] uppercase tracking-[0.3em] text-cream-300 mt-1;
   }
 }
+
+body.menu-lightbox-open .site-navbar {
+  opacity: 0;
+  pointer-events: none;
+}

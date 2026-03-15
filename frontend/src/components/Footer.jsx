@@ -1,4 +1,5 @@
 import { siteData } from '../data/siteData';
+import { Link } from 'react-router-dom';
 
 const { contact, social } = siteData;
 
@@ -6,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="bg-wood-950 text-cream-200/70 pt-16 pb-8">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-14">
           {/* Brand */}
           <div>
             <div className="mb-4 inline-flex items-center rounded-xl bg-cream-50 px-3 py-2">
@@ -28,6 +29,17 @@ export default function Footer() {
             <h5 className="text-xs uppercase tracking-widest text-terracotta-400 font-bold mb-4">Dove siamo</h5>
             <p className="text-sm leading-relaxed">{contact.address}</p>
             <p className="text-sm">{contact.cap} {contact.city}</p>
+          </div>
+
+          {/* Quick links */}
+          <div>
+            <h5 className="text-xs uppercase tracking-widest text-terracotta-400 font-bold mb-4">Link rapidi</h5>
+            <div className="space-y-2 text-sm">
+              <p><Link to="/" className="hover:text-terracotta-300 transition-colors">Home</Link></p>
+              <p><Link to="/chi-siamo" className="hover:text-terracotta-300 transition-colors">Chi Siamo</Link></p>
+              <p><Link to="/menu" className="hover:text-terracotta-300 transition-colors">Menu</Link></p>
+              <p><Link to="/contatti" className="hover:text-terracotta-300 transition-colors">Contatti</Link></p>
+            </div>
           </div>
 
           {/* Hours */}

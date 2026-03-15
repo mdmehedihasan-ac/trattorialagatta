@@ -12,7 +12,7 @@ const fadeUp = {
 
 export default function About() {
   return (
-    <section id="chi-siamo" className="section-padding bg-cream-50 relative">
+    <section id="chi-siamo" data-nav-theme="light" className="section-padding bg-cream-50 relative">
       {/* Decorative top border */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-terracotta-300/30 to-transparent" />
 
@@ -24,13 +24,10 @@ export default function About() {
           viewport={{ once: true, margin: '-80px' }}
           className="text-center mb-16 md:mb-20"
         >
-          <motion.p variants={fadeUp} custom={0} className="section-subtitle">
-            La nostra storia
-          </motion.p>
-          <motion.h2 variants={fadeUp} custom={1} className="section-title">
+          <motion.h2 variants={fadeUp} custom={0} className="section-title">
             Chi Siamo
           </motion.h2>
-          <motion.div variants={fadeUp} custom={2} className="section-divider mt-6" />
+          <motion.div variants={fadeUp} custom={1} className="section-divider mt-6" />
         </motion.div>
 
         {/* Two-column layout */}
@@ -41,14 +38,14 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
-            <motion.div variants={fadeUp} custom={0} className="mb-8">
+            <motion.div variants={fadeUp} custom={0} className="mb-0">
               <span className="font-serif text-7xl md:text-8xl text-terracotta-200 leading-none select-none">&ldquo;</span>
             </motion.div>
 
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="text-wood-700 text-lg md:text-xl leading-relaxed font-light mb-8"
+              className="-mt-8 text-wood-700 text-lg md:text-xl leading-relaxed font-light mb-8"
             >
               {siteData.about.philosophy}
             </motion.p>
@@ -106,30 +103,32 @@ export default function About() {
                 loading="lazy"
               />
             </motion.div>
+          </motion.div>
+        </div>
 
-            <motion.div
-              variants={fadeUp}
-              custom={1}
-              className="bg-gradient-to-br from-terracotta-600 to-terracotta-700 rounded-2xl p-8 text-cream-50"
-            >
-              <h3 className="font-serif text-2xl mb-4">30 Anni di Sapori</h3>
-              <p className="text-cream-100/90 leading-relaxed text-sm md:text-base">
-                {siteData.about.thirtyYears}
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              custom={2}
-              className="bg-sage-50 rounded-2xl p-8 border border-sage-100"
-            >
+        {/* Dicono di Noi (left) + 30 Anni (right) — full width row */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="mt-12"
+        >
+          <motion.div variants={fadeUp} custom={1.5} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-sage-50 rounded-2xl p-8 border border-sage-100">
               <h3 className="font-serif text-2xl text-wood-800 mb-4">Dicono di Noi</h3>
               <p className="text-wood-600 leading-relaxed text-sm md:text-base">
                 {siteData.about.reviews}
               </p>
-            </motion.div>
+            </div>
+
+            <div className="bg-gradient-to-br from-terracotta-600 to-terracotta-700 rounded-2xl p-8 text-cream-50">
+              <h3 className="font-serif text-2xl mb-4">30 Anni di Sapori</h3>
+              <p className="text-cream-100/90 leading-relaxed text-sm md:text-base">
+                {siteData.about.thirtyYears}
+              </p>
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Food gallery strip */}
         <motion.div
@@ -160,6 +159,7 @@ export default function About() {
         >
           <motion.div
             variants={fadeUp}
+            data-nav-theme="dark"
             className="relative bg-wood-900 rounded-3xl p-10 md:p-16 text-center overflow-hidden"
           >
             {/* Decorative bg circles */}

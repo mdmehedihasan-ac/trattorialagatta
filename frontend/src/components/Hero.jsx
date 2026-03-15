@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { siteData } from '../data/siteData';
 
 export default function Hero() {
@@ -9,23 +10,15 @@ export default function Hero() {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.7], [0, -60]);
   const heroLogo = siteData.images.logo?.navbar || siteData.images.logo?.primary;
-
-  const goTo = (e, href) => {
-    e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
+  const navigate = useNavigate();
 
   return (
-    <section id="hero" ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" ref={ref} data-nav-theme="dark" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Parallax background */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -top-20 -bottom-20 z-0">
         {/* Real background image from the restaurant */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-[3px] scale-105"
           style={{
             backgroundImage: `url('${siteData.images.hero}')`,
             backgroundPosition: 'center 38%',
@@ -102,21 +95,20 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <a
-            href="#contatti"
-            onClick={(e) => goTo(e, '#contatti')}
+            href="/contatti"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/contatti');
+            }}
             className="inline-block bg-terracotta-600 hover:bg-terracotta-500 text-cream-50 px-8 py-4 rounded-full text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hover:shadow-xl hover:shadow-terracotta-600/25 hover:-translate-y-0.5"
           >
             Prenota il tuo tavolo
           </a>
           <a
-            href="#menu"
+            href="/menu"
             onClick={(e) => {
               e.preventDefault();
-              const el = document.querySelector('#menu');
-              if (el) {
-                const y = el.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-              }
+              navigate('/menu');
             }}
             className="inline-block border border-cream-200/30 hover:border-cream-200/60 text-cream-100 px-8 py-4 rounded-full text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hover:-translate-y-0.5"
           >
